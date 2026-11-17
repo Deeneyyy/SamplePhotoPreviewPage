@@ -1,0 +1,6 @@
+{
+  "name": "Atelier Voss — Kinetic Photo Gallery & Portfolio",
+  "description": "A minimalist white-canvas photography portfolio and kinetic gallery featuring 120 archival works in constant horizontal or vertical looping motion, pausing on image hover and expanding on click.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function () {
+        try {
+          var currentFetch = window.fetch;
+          var desc = Object.getOwnPropertyDescriptor(window, 'fetch');
+          if (!desc || (!desc.writable && !desc.set && desc.configurable !== false)) {
+            Object.defineProperty(window, 'fetch', {
+              configurable: true,
+              enumerable: true,
+              get: function () {
+                return currentFetch;
+              },
+              set: function (fn) {
+                if (typeof fn === 'function') {
+                  currentFetch = fn;
+                }
+              },
+            });
+          }
+        } catch (_) {}
+
+        window.addEventListener(
+          'error',
+          function (event) {
+            if (
+              event &&
+              ((typeof event.filename === 'string' &&
+                event.filename.indexOf('chrome-extension://') === 0) ||
+                (typeof event.message === 'string' &&
+                  event.message.indexOf('Cannot set property fetch') !== -1))
+            ) {
+              event.stopImmediatePropagation();
+              event.preventDefault();
+            }
+          },
+          true
+        );
+      })();
+    </script>
+    <title>Atelier Voss — Kinetic Photo Gallery & Portfolio</title>
+    <meta name="description" content="A minimalist white-canvas photography portfolio and kinetic gallery featuring 120 archival works in constant horizontal or vertical looping motion, pausing on image hover and expanding on click." />
+    <meta property="og:title" content="Atelier Voss — Kinetic Photo Gallery & Portfolio" />
+    <meta property="og:description" content="A minimalist white-canvas photography portfolio and kinetic gallery featuring 120 archival works in constant horizontal or vertical looping motion, pausing on image hover and expanding on click." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-white text-zinc-900 antialiased selection:bg-zinc-900 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
